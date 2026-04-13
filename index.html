@@ -2,358 +2,276 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Jen Fitness Log</title>
-
-  <script>
-    window.__BUILD__ = "JEN-002";
-  </script>
-
-  <link rel="stylesheet" href="styles.css?v=JEN-002" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Jen Fitness App</title>
+  <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <div class="wrap">
-    <h1>
-      Jen Fitness Log
-      <span class="pill" id="nextDayPill">Next: Lower Body and Glutes</span>
-      <span class="pill" id="nutritionPill">Nutrition: 0 calories</span>
-    </h1>
-
-    <div class="grid">
-      <div class="card">
-        <div class="row" style="justify-content:space-between;">
-          <div class="small muted">Simple progression, voice rep counter, and nutrition tracking.</div>
-          <button id="btnSettings" title="Settings">⚙️</button>
-        </div>
-
-        <div class="tabs">
-          <button class="tabbtn active" data-tab="entry">Workout Entry</button>
-          <button class="tabbtn" data-tab="nutrition">Nutrition</button>
-          <button class="tabbtn" data-tab="progress">Progress</button>
-        </div>
-
-        <!-- ENTRY -->
-        <div id="tab_entry" style="margin-top:12px;">
-          <div class="card">
-            <div class="row">
-              <div style="flex: 1 1 140px;">
-                <label for="daySelect">Workout</label>
-                <select id="daySelect">
-                  <option value="A">Lower Body and Glutes</option>
-                  <option value="B">Upper Body</option>
-                  <option value="C">Full Body and Conditioning</option>
-                </select>
-              </div>
-              <div style="flex: 1 1 160px;">
-                <label for="dateInput">Date</label>
-                <input id="dateInput" type="date" />
-              </div>
-            </div>
-
-            <div style="margin-top:10px;">
-              <label for="exerciseSelect">Exercise</label>
-              <select id="exerciseSelect"></select>
-            </div>
-
-            <div class="mini" style="margin-top:10px;">
-              <div class="row">
-                <span class="badge" id="lastBadge">Last: —</span>
-                <span class="badge ok" id="targetBadge">Target range: —</span>
-                <span class="badge warn" id="nextBadge">Next target: —</span>
-              </div>
-              <div class="small muted" style="margin-top:6px;">
-                The app loads the last result for each exercise and suggests the next weight when the top of the range is hit with clean form.
-              </div>
-              <div class="row" style="margin-top:8px;">
-                <button id="btnApplySuggested">Apply suggested target</button>
-                <button id="btnUseLast">Load last</button>
-              </div>
-            </div>
-
-            <div class="row" style="margin-top:10px;">
-              <div style="flex: 1 1 120px;">
-                <label for="weightInput">Weight</label>
-                <input id="weightInput" inputmode="decimal" placeholder="Example: 25" />
-              </div>
-              <div style="flex: 1 1 140px;">
-                <label for="repsInput">Repetitions or Time</label>
-                <input id="repsInput" inputmode="numeric" placeholder="Example: 12" />
-              </div>
-              <div style="flex: 1 1 170px;">
-                <label for="unitsSelect">Units</label>
-                <select id="unitsSelect">
-                  <option value="pounds">Pounds</option>
-                  <option value="kilograms">Kilograms</option>
-                  <option value="bodyweight">Bodyweight</option>
-                  <option value="seconds">Seconds</option>
-                  <option value="minutes">Minutes</option>
-                </select>
-              </div>
-            </div>
-
-            <div class="row" style="margin-top:10px;">
-              <label class="pill" style="margin:0;">
-                <input type="checkbox" id="chkClean" />
-                Clean and controlled form
-              </label>
-              <span class="right small muted" id="lastComparison"></span>
-            </div>
-
-            <div class="mini" style="margin-top:10px;">
-              <strong>How did it feel?</strong>
-              <div class="row" style="margin-top:8px;">
-                <label class="pill"><input type="radio" name="effortFeel" value="Easy" /> Easy</label>
-                <label class="pill"><input type="radio" name="effortFeel" value="Challenging" /> Challenging</label>
-                <label class="pill"><input type="radio" name="effortFeel" value="Too much" /> Too much</label>
-              </div>
-            </div>
-
-            <div class="mini" style="margin-top:10px;">
-              <strong>Rep Counter</strong>
-              <div class="small muted" style="margin-top:6px;">
-                Tap Start and follow the cues: four seconds down and two seconds up.
-              </div>
-
-              <div class="row" style="margin-top:10px;">
-                <div style="flex: 1 1 120px;">
-                  <label for="cadDown">Down (seconds)</label>
-                  <input id="cadDown" inputmode="numeric" value="4" />
-                </div>
-                <div style="flex: 1 1 120px;">
-                  <label for="cadUp">Up (seconds)</label>
-                  <input id="cadUp" inputmode="numeric" value="2" />
-                </div>
-                <div style="flex: 1 1 140px;">
-                  <label for="cadReps">Repetitions to cue</label>
-                  <input id="cadReps" inputmode="numeric" value="8" />
-                </div>
-              </div>
-
-              <div class="row" style="margin-top:10px;">
-                <label class="pill" style="margin:0;">
-                  <input type="checkbox" id="chkCadVoice" checked />
-                  Voice
-                </label>
-                <label class="pill" style="margin:0;">
-                  <input type="checkbox" id="chkCadBeep" checked />
-                  Sound
-                </label>
-                <label class="pill" style="margin:0;">
-                  <input type="checkbox" id="chkCadVibe" checked />
-                  Vibrate
-                </label>
-              </div>
-
-              <div class="mini" style="margin-top:10px;">
-                <div class="small muted">
-                  Hands-free mode: tap Voice Commands On once, then say start or stop.
-                </div>
-                <div class="row" style="margin-top:10px;">
-                  <button class="primary" id="btnCadStart">Start</button>
-                  <button id="btnCadStop">Stop</button>
-                  <button id="btnVoiceCmdOn">Voice Commands On</button>
-                  <button id="btnVoiceCmdOff">Voice Commands Off</button>
-                  <span class="right mono" id="cadStatus">Idle</span>
-                </div>
-              </div>
-            </div>
-
-            <div style="margin-top:10px;">
-              <label for="notesInput">Notes (optional)</label>
-              <textarea id="notesInput" placeholder="Example: strong today, solid form, left side tired"></textarea>
-            </div>
-
-            <div class="row" style="margin-top:10px;">
-              <button class="primary" id="btnAdd">Add to Log</button>
-              <button id="btnQuickLast">Use last entry</button>
-            </div>
-
-            <div class="toast" id="toast"></div>
-          </div>
-        </div>
-
-        <!-- NUTRITION -->
-        <div id="tab_nutrition" class="hidden" style="margin-top:12px;">
-          <div class="card">
-            <strong>Daily Nutrition</strong>
-            <div class="small muted" style="margin-top:6px;">
-              Simple daily tracking for calories, protein, carbohydrates, fat, water, and consistency habits.
-            </div>
-
-            <div class="kpi" style="margin-top:10px;">
-              <div class="box">
-                <div class="small muted">Calories</div>
-                <div class="big">Track daily</div>
-                <div class="small muted">Start with accuracy before adjusting targets.</div>
-              </div>
-              <div class="box">
-                <div class="small muted">Protein</div>
-                <div class="big">Track daily</div>
-                <div class="small muted">Keep this steady.</div>
-              </div>
-              <div class="box">
-                <div class="small muted">Carbohydrates</div>
-                <div class="big">Track daily</div>
-                <div class="small muted">Fuel workouts and recovery.</div>
-              </div>
-              <div class="box">
-                <div class="small muted">Fat</div>
-                <div class="big">Track daily</div>
-                <div class="small muted">Balance and satiety.</div>
-              </div>
-            </div>
-
-            <div class="hr"></div>
-
-            <strong>Daily checklist</strong>
-            <div class="row" style="margin-top:8px;">
-              <label class="pill"><input type="checkbox" id="chkWorkoutDone" /> Workout completed</label>
-              <label class="pill"><input type="checkbox" id="chkProteinGoal" /> Protein goal hit</label>
-              <label class="pill"><input type="checkbox" id="chkWater" /> Water goal hit</label>
-              <label class="pill"><input type="checkbox" id="chkSteps" /> Walking or steps done</label>
-            </div>
-
-            <div class="hr"></div>
-
-            <strong>Macro and calorie tracker</strong>
-            <div class="row" style="margin-top:10px;">
-              <div style="flex: 1 1 120px;">
-                <label for="caloriesInput">Calories</label>
-                <input id="caloriesInput" inputmode="numeric" placeholder="Example: 1800" />
-              </div>
-              <div style="flex: 1 1 120px;">
-                <label for="proteinInput">Protein (grams)</label>
-                <input id="proteinInput" inputmode="numeric" placeholder="Example: 130" />
-              </div>
-              <div style="flex: 1 1 140px;">
-                <label for="carbohydratesInput">Carbohydrates (grams)</label>
-                <input id="carbohydratesInput" inputmode="numeric" placeholder="Example: 160" />
-              </div>
-              <div style="flex: 1 1 120px;">
-                <label for="fatInput">Fat (grams)</label>
-                <input id="fatInput" inputmode="numeric" placeholder="Example: 60" />
-              </div>
-            </div>
-
-            <div class="row" style="margin-top:10px;">
-              <button class="primary" id="btnSaveDaily">Save today</button>
-              <button id="btnResetDaily">Reset today</button>
-              <span class="right small muted" id="dailySavedText"></span>
-            </div>
-
-            <div class="hr"></div>
-
-            <strong>Weigh-in Log</strong>
-            <div class="small muted">Use the same conditions each time for cleaner trend tracking.</div>
-
-            <div class="row" style="margin-top:10px;">
-              <div style="flex: 1 1 160px;">
-                <label for="weighDate">Date</label>
-                <input id="weighDate" type="date" />
-              </div>
-              <div style="flex: 1 1 160px;">
-                <label for="weighValue">Bodyweight</label>
-                <input id="weighValue" inputmode="decimal" placeholder="Example: 145.2" />
-              </div>
-              <div style="flex: 1 1 200px;">
-                <label for="weighNote">Note (optional)</label>
-                <input id="weighNote" placeholder="Example: slept badly, ate late, cycle week" />
-              </div>
-              <div style="flex: 1 1 120px;">
-                <label>&nbsp;</label>
-                <button class="primary" id="btnAddWeigh">Add</button>
-              </div>
-            </div>
-
-            <div style="margin-top:10px; overflow:auto;">
-              <table>
-                <thead>
-                  <tr>
-                    <th style="width:120px;">Date</th>
-                    <th style="width:120px;">Weight</th>
-                    <th>Note</th>
-                    <th style="width:90px;">Action</th>
-                  </tr>
-                </thead>
-                <tbody id="weighBody"></tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-
-        <!-- PROGRESS -->
-        <div id="tab_progress" class="hidden" style="margin-top:12px;">
-          <div class="card">
-            <strong>What Progress Should Feel Like</strong>
-            <div class="small muted" style="margin-top:6px;">
-              This is about consistency, strength, and body composition moving in the right direction.
-            </div>
-
-            <div class="hr"></div>
-            <div><strong>Weeks 1–4</strong><div class="small muted">Learn the movements, settle into the plan, and get comfortable training with control.</div></div>
-            <div class="hr"></div>
-            <div><strong>Weeks 5–8</strong><div class="small muted">Repetitions improve, confidence improves, and workouts feel more purposeful.</div></div>
-            <div class="hr"></div>
-            <div><strong>Weeks 9–12</strong><div class="small muted">Strength and shape changes become easier to notice when food and training are both steady.</div></div>
-            <div class="hr"></div>
-            <div><strong>Long term</strong><div class="small muted">Keep it simple. Progress comes from repeating the basics well, not from constantly changing routines.</div></div>
-          </div>
-        </div>
-
-        <!-- SETTINGS -->
-        <div class="card hidden" id="settingsPanel" style="margin-top:12px;">
-          <div class="row" style="justify-content:space-between;">
-            <strong>Settings</strong>
-            <button id="btnCloseSettings">✕</button>
-          </div>
-
-          <div class="row" style="margin-top:10px;">
-            <button id="btnExport">Export Workout Log</button>
-            <button id="btnExportWeigh">Export Weigh-ins</button>
-            <button class="danger" id="btnClear">Clear Workout Log</button>
-            <button class="danger" id="btnClearWeigh">Clear Weigh-ins</button>
-          </div>
-
-          <div class="small muted" style="margin-top:10px;">
-            Data is stored locally in the browser. Export files for backup.
-          </div>
-        </div>
+  <div class="app">
+    <header class="app-header card">
+      <div>
+        <h1>Jen Fitness App</h1>
+        <p class="muted">Simple structure for training, nutrition, and steady progress.</p>
       </div>
+      <div class="pill-row">
+        <span class="pill" id="nextDayPill">Next: Lower Body and Glutes</span>
+        <span class="pill" id="nutritionPill">Nutrition: 0 calories</span>
+      </div>
+    </header>
 
-      <div class="card">
+    <nav class="tabs card" aria-label="Main tabs">
+      <button class="tabbtn active" data-tab="entry" id="tabBtnEntry" type="button">Workout Entry</button>
+      <button class="tabbtn" data-tab="nutrition" id="tabBtnNutrition" type="button">Nutrition</button>
+      <button class="tabbtn" data-tab="progress" id="tabBtnProgress" type="button">Progress</button>
+    </nav>
+
+    <main class="layout">
+      <section class="panel card" id="tab_entry">
+        <h2>Workout Entry</h2>
+
+        <div class="field-grid">
+          <div>
+            <label for="daySelect">Workout day</label>
+            <select id="daySelect">
+              <option value="A">Day A — Lower Body and Glutes</option>
+              <option value="B">Day B — Upper Body</option>
+              <option value="C">Day C — Full Body and Conditioning</option>
+            </select>
+          </div>
+          <div>
+            <label for="dateInput">Date</label>
+            <input type="date" id="dateInput" />
+          </div>
+        </div>
+
+        <div>
+          <label for="exerciseSelect">Exercise</label>
+          <select id="exerciseSelect"></select>
+        </div>
+
+        <div class="badge-row">
+          <span class="badge" id="lastBadge">Last: —</span>
+          <span class="badge" id="targetBadge">Target range: —</span>
+          <span class="badge" id="nextBadge">Next target: —</span>
+        </div>
+
+        <div class="field-grid" id="resultFields">
+          <div>
+            <label for="weightInput" id="weightLabel">Weight</label>
+            <input id="weightInput" inputmode="decimal" placeholder="e.g. 25" />
+          </div>
+          <div>
+            <label for="repsInput" id="repsLabel">Repetitions</label>
+            <input id="repsInput" inputmode="decimal" placeholder="e.g. 12" />
+          </div>
+          <div>
+            <label for="unitsSelect">Units</label>
+            <select id="unitsSelect">
+              <option value="pounds">Pounds</option>
+              <option value="kilograms">Kilograms</option>
+              <option value="bodyweight">Bodyweight</option>
+              <option value="seconds">Seconds</option>
+              <option value="minutes">Minutes</option>
+            </select>
+          </div>
+        </div>
+
         <div class="row">
-          <strong>Workout Log</strong>
-          <span class="right small muted" id="logCount"></span>
+          <label class="inline-check"><input type="checkbox" id="chkClean" /> Clean and controlled form</label>
+          <span id="lastComparison" class="muted"></span>
         </div>
 
-        <div class="row" style="margin-top:10px;">
-          <input id="searchInput" placeholder="Search exercise, workout, or notes…" style="flex:1 1 auto;" />
-          <button id="btnToday">Today</button>
-          <button id="btnDeleteLast" class="danger" title="Delete last entry">Delete last</button>
+        <fieldset class="mini-card">
+          <legend>How did it feel?</legend>
+          <div class="row">
+            <label class="inline-check"><input type="radio" name="effortFeel" value="Easy" /> Easy</label>
+            <label class="inline-check"><input type="radio" name="effortFeel" value="Challenging" /> Challenging</label>
+            <label class="inline-check"><input type="radio" name="effortFeel" value="Too much" /> Too much</label>
+          </div>
+        </fieldset>
+
+        <div class="row">
+          <button type="button" id="btnApplySuggested">Apply suggested target</button>
+          <button type="button" id="btnUseLast">Load last</button>
+          <button type="button" id="btnQuickLast">Use last entry</button>
+          <button type="button" id="btnToday">Today</button>
         </div>
 
-        <div style="margin-top:10px; overflow:auto;">
+        <div>
+          <label for="notesInput">Notes (optional)</label>
+          <textarea id="notesInput" placeholder="Short notes"></textarea>
+        </div>
+
+        <div class="row">
+          <button class="primary" type="button" id="btnAdd">Add to log</button>
+        </div>
+
+        <section class="mini-card">
+          <h3>Cadence / Rep Counter</h3>
+          <div class="field-grid">
+            <div>
+              <label for="cadDown">Down (seconds)</label>
+              <input id="cadDown" inputmode="numeric" value="4" />
+            </div>
+            <div>
+              <label for="cadUp">Up (seconds)</label>
+              <input id="cadUp" inputmode="numeric" value="2" />
+            </div>
+            <div>
+              <label for="cadReps">Repetitions to cue</label>
+              <input id="cadReps" inputmode="numeric" value="8" />
+            </div>
+          </div>
+
+          <div class="row">
+            <label class="inline-check"><input type="checkbox" id="chkCadVoice" checked /> Voice output</label>
+            <label class="inline-check"><input type="checkbox" id="chkCadBeep" checked /> Sound</label>
+            <label class="inline-check"><input type="checkbox" id="chkCadVibe" checked /> Vibration</label>
+          </div>
+
+          <div class="row">
+            <button class="primary" type="button" id="btnCadStart">Start</button>
+            <button type="button" id="btnCadStop">Stop</button>
+            <button type="button" id="btnVoiceCmdOn">Voice commands on</button>
+            <button type="button" id="btnVoiceCmdOff">Voice commands off</button>
+            <span class="pill" id="cadStatus">Idle</span>
+          </div>
+        </section>
+
+        <p class="toast" id="toast" aria-live="polite"></p>
+      </section>
+
+      <section class="panel card hidden" id="tab_nutrition">
+        <h2>Nutrition</h2>
+
+        <section class="mini-card">
+          <h3>Daily checklist</h3>
+          <div class="row">
+            <label class="inline-check"><input type="checkbox" id="chkWorkoutDone" /> Workout completed</label>
+            <label class="inline-check"><input type="checkbox" id="chkProteinGoal" /> Protein goal hit</label>
+            <label class="inline-check"><input type="checkbox" id="chkWater" /> Water goal hit</label>
+            <label class="inline-check"><input type="checkbox" id="chkSteps" /> Walking or steps done</label>
+          </div>
+        </section>
+
+        <section class="mini-card">
+          <h3>Daily nutrition</h3>
+          <div class="field-grid">
+            <div>
+              <label for="caloriesInput">Calories</label>
+              <input id="caloriesInput" inputmode="numeric" />
+            </div>
+            <div>
+              <label for="proteinInput">Protein (grams)</label>
+              <input id="proteinInput" inputmode="numeric" />
+            </div>
+            <div>
+              <label for="carbohydratesInput">Carbohydrates (grams)</label>
+              <input id="carbohydratesInput" inputmode="numeric" />
+            </div>
+            <div>
+              <label for="fatInput">Fat (grams)</label>
+              <input id="fatInput" inputmode="numeric" />
+            </div>
+          </div>
+          <div class="row">
+            <button class="primary" type="button" id="btnSaveDaily">Save today</button>
+            <button type="button" id="btnResetDaily">Reset today</button>
+            <span class="muted" id="dailySavedText"></span>
+          </div>
+        </section>
+
+        <section class="mini-card">
+          <h3>Weigh-in</h3>
+          <div class="field-grid">
+            <div>
+              <label for="weighDate">Date</label>
+              <input type="date" id="weighDate" />
+            </div>
+            <div>
+              <label for="weighValue">Bodyweight</label>
+              <input id="weighValue" inputmode="decimal" />
+            </div>
+            <div>
+              <label for="weighNote">Note (optional)</label>
+              <input id="weighNote" />
+            </div>
+            <div class="align-end">
+              <button class="primary" type="button" id="btnAddWeigh">Add</button>
+            </div>
+          </div>
+
+          <div class="row">
+            <button type="button" id="btnExportWeigh">Export weigh-ins CSV</button>
+            <button type="button" class="danger" id="btnClearWeigh">Clear weigh-ins</button>
+          </div>
+
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Date</th>
+                  <th>Bodyweight</th>
+                  <th>Note</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody id="weighBody"></tbody>
+            </table>
+          </div>
+        </section>
+      </section>
+
+      <section class="panel card hidden" id="tab_progress">
+        <h2>Progress</h2>
+        <section class="mini-card">
+          <h3>Weeks 1 to 4</h3>
+          <p class="muted">Learn the exercise setup, use controlled form, and keep logging each session.</p>
+        </section>
+        <section class="mini-card">
+          <h3>Weeks 5 to 8</h3>
+          <p class="muted">You should notice better control, more repeatable sessions, and more confidence with effort.</p>
+        </section>
+        <section class="mini-card">
+          <h3>Weeks 9 to 12</h3>
+          <p class="muted">Strength and conditioning should feel more stable. Keep food and training routines consistent.</p>
+        </section>
+        <section class="mini-card">
+          <h3>Long term</h3>
+          <p class="muted">Stay with the basics, adjust gradually, and focus on doing quality work week after week.</p>
+        </section>
+      </section>
+
+      <section class="panel card" id="logPanel">
+        <div class="row row-between">
+          <h2>Workout Log</h2>
+          <span id="logCount" class="muted"></span>
+        </div>
+        <div class="row">
+          <input id="searchInput" placeholder="Search log" />
+          <button type="button" id="btnDeleteLast" class="danger">Delete last entry</button>
+          <button type="button" id="btnExport">Export workout log CSV</button>
+          <button type="button" id="btnClear" class="danger">Clear workout log</button>
+        </div>
+        <div class="table-wrap">
           <table>
             <thead>
               <tr>
-                <th style="width:110px;">Date</th>
-                <th style="width:70px;">Day</th>
+                <th>Date</th>
+                <th>Day</th>
                 <th>Exercise</th>
-                <th style="width:190px;">Result</th>
+                <th>Result</th>
+                <th>Effort</th>
                 <th>Notes</th>
               </tr>
             </thead>
             <tbody id="logBody"></tbody>
           </table>
         </div>
-
-        <div class="small muted" style="margin-top:10px;">
-          Tip: clean form is what earns progression.
-        </div>
-      </div>
-    </div>
+      </section>
+    </main>
   </div>
 
-  <script src="app.js?v=JEN-002"></script>
+  <script src="app.js"></script>
 </body>
 </html>
