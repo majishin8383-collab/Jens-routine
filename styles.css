@@ -4,8 +4,8 @@
 
 body {
   margin: 0;
-  background: #fff8fb;
-  color: #2b2430;
+  background: #f5f1ff;
+  color: #251f34;
 }
 
 .wrap {
@@ -33,10 +33,10 @@ h1 {
 
 .card {
   background: #ffffff;
-  border: 1px solid #eed9e5;
+  border: 1px solid #d9cff7;
   border-radius: 14px;
   padding: 12px;
-  box-shadow: 0 2px 10px rgba(95, 58, 79, 0.05);
+  box-shadow: 0 2px 10px rgba(78, 53, 140, 0.06);
 }
 
 .row {
@@ -57,9 +57,9 @@ select,
 input,
 textarea,
 button {
-  background: #fffafd;
-  color: #2b2430;
-  border: 1px solid #d9bccc;
+  background: #fcfbff;
+  color: #251f34;
+  border: 1px solid #c6b8ee;
   border-radius: 10px;
   padding: 10px;
   font-size: 14px;
@@ -81,13 +81,13 @@ button {
 }
 
 button.primary {
-  background: #f2d7e7;
-  border-color: #c88fb1;
+  background: #e4dcff;
+  border-color: #9c88e6;
 }
 
 button.danger {
-  background: #ffe3ea;
-  border-color: #d8899e;
+  background: #fde8ef;
+  border-color: #d49bb2;
 }
 
 .small {
@@ -99,8 +99,8 @@ button.danger {
   display: inline-block;
   padding: 6px 10px;
   border-radius: 999px;
-  background: #fffafd;
-  border: 1px solid #d9bccc;
+  background: #fcfbff;
+  border: 1px solid #c6b8ee;
   font-size: 12px;
 }
 
@@ -111,7 +111,7 @@ table {
 
 th,
 td {
-  border-bottom: 1px solid #f0dce6;
+  border-bottom: 1px solid #ece6fb;
   padding: 10px 8px;
   vertical-align: top;
 }
@@ -157,8 +157,8 @@ th {
 }
 
 .tabbtn.active {
-  background: #f2d7e7;
-  border-color: #c88fb1;
+  background: #e4dcff;
+  border-color: #9c88e6;
 }
 
 .kpi {
@@ -168,8 +168,8 @@ th {
 }
 
 .kpi .box {
-  background: #fffafd;
-  border: 1px solid #d9bccc;
+  background: #fcfbff;
+  border: 1px solid #c6b8ee;
   border-radius: 12px;
   padding: 10px;
 }
@@ -181,13 +181,13 @@ th {
 
 .hr {
   height: 1px;
-  background: #f0dce6;
+  background: #ece6fb;
   margin: 10px 0;
 }
 
 .mini {
-  background: #fffafd;
-  border: 1px solid #d9bccc;
+  background: #fcfbff;
+  border: 1px solid #c6b8ee;
   border-radius: 12px;
   padding: 10px;
 }
@@ -195,13 +195,13 @@ th {
 .badge {
   padding: 6px 10px;
   border-radius: 999px;
-  border: 1px solid #d9bccc;
-  background: #fffafd;
+  border: 1px solid #c6b8ee;
+  background: #fcfbff;
   font-size: 12px;
 }
 
 .ok {
-  border-color: #b98cab;
+  border-color: #9c88e6;
 }
 
 .warn {
