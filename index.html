@@ -6,76 +6,42 @@
   <title>Jen Fitness Log</title>
 
   <script>
-    window.__BUILD__ = "JEN-001";
+    window.__BUILD__ = "JEN-002";
   </script>
 
-  <link rel="stylesheet" href="styles.css?v=JEN-001" />
+  <link rel="stylesheet" href="styles.css?v=JEN-002" />
 </head>
 <body>
   <div class="wrap">
     <h1>
       Jen Fitness Log
-      <span class="pill" id="nextDayPill">Next: Day A</span>
+      <span class="pill" id="nextDayPill">Next: Lower Body and Glutes</span>
       <span class="pill" id="nutritionPill">Nutrition: 0 calories</span>
     </h1>
 
     <div class="grid">
       <div class="card">
         <div class="row" style="justify-content:space-between;">
-          <div class="small muted">Simple progression, cadence coach, voice commands, and nutrition tracking.</div>
+          <div class="small muted">Simple progression, voice rep counter, and nutrition tracking.</div>
           <button id="btnSettings" title="Settings">⚙️</button>
         </div>
 
         <div class="tabs">
-          <button class="tabbtn active" data-tab="plan">Plan</button>
-          <button class="tabbtn" data-tab="entry">Entry</button>
+          <button class="tabbtn active" data-tab="entry">Workout Entry</button>
           <button class="tabbtn" data-tab="nutrition">Nutrition</button>
           <button class="tabbtn" data-tab="progress">Progress</button>
         </div>
 
-        <div id="tab_plan" style="margin-top:12px;">
+        <!-- ENTRY -->
+        <div id="tab_entry" style="margin-top:12px;">
           <div class="card">
             <div class="row">
-              <div style="flex: 1 1 160px;">
-                <label for="daySelectPlan">Preview Day</label>
-                <select id="daySelectPlan">
-                  <option value="A">Day A — Lower Body and Glutes</option>
-                  <option value="B">Day B — Upper Body</option>
-                  <option value="C">Day C — Full Body and Conditioning</option>
-                </select>
-              </div>
-              <div style="flex: 1 1 200px;">
-                <label>Recovery Guide</label>
-                <div class="small muted">Rest as needed. Train again when soreness has settled and energy feels good.</div>
-              </div>
-            </div>
-
-            <div class="hr"></div>
-
-            <div class="row">
-              <div style="flex:1 1 auto;">
-                <strong id="planTitle">Plan — Day A (Lower Body and Glutes)</strong>
-                <ul id="planList" class="small muted" style="margin:8px 0 0; padding-left:18px;"></ul>
-              </div>
-            </div>
-          </div>
-
-          <div class="mini" style="margin-top:12px;">
-            <div class="small muted">
-              Progression logic: when the top of the repetition range is reached with clean form, the app suggests a small increase next time.
-            </div>
-          </div>
-        </div>
-
-        <div id="tab_entry" class="hidden" style="margin-top:12px;">
-          <div class="card">
-            <div class="row">
-              <div style="flex: 1 1 120px;">
-                <label for="daySelect">Day</label>
+              <div style="flex: 1 1 140px;">
+                <label for="daySelect">Workout</label>
                 <select id="daySelect">
-                  <option value="A">Day A — Lower Body and Glutes</option>
-                  <option value="B">Day B — Upper Body</option>
-                  <option value="C">Day C — Full Body and Conditioning</option>
+                  <option value="A">Lower Body and Glutes</option>
+                  <option value="B">Upper Body</option>
+                  <option value="C">Full Body and Conditioning</option>
                 </select>
               </div>
               <div style="flex: 1 1 160px;">
@@ -96,7 +62,7 @@
                 <span class="badge warn" id="nextBadge">Next target: —</span>
               </div>
               <div class="small muted" style="margin-top:6px;">
-                The app auto-fills the last result. If the top of the range is hit with clean form, it saves the next suggested weight automatically.
+                The app loads the last result for each exercise and suggests the next weight when the top of the range is hit with clean form.
               </div>
               <div class="row" style="margin-top:8px;">
                 <button id="btnApplySuggested">Apply suggested target</button>
@@ -109,17 +75,16 @@
                 <label for="weightInput">Weight</label>
                 <input id="weightInput" inputmode="decimal" placeholder="Example: 25" />
               </div>
-              <div style="flex: 1 1 120px;">
+              <div style="flex: 1 1 140px;">
                 <label for="repsInput">Repetitions or Time</label>
                 <input id="repsInput" inputmode="numeric" placeholder="Example: 12" />
               </div>
-              <div style="flex: 1 1 180px;">
+              <div style="flex: 1 1 170px;">
                 <label for="unitsSelect">Units</label>
                 <select id="unitsSelect">
                   <option value="pounds">Pounds</option>
                   <option value="kilograms">Kilograms</option>
                   <option value="bodyweight">Bodyweight</option>
-                  <option value="bodyweight plus load">Bodyweight plus load</option>
                   <option value="seconds">Seconds</option>
                   <option value="minutes">Minutes</option>
                 </select>
@@ -144,9 +109,9 @@
             </div>
 
             <div class="mini" style="margin-top:10px;">
-              <strong>Cadence Coach</strong>
+              <strong>Rep Counter</strong>
               <div class="small muted" style="margin-top:6px;">
-                Tap Start and follow the cues: four seconds down, two seconds up.
+                Tap Start and follow the cues: four seconds down and two seconds up.
               </div>
 
               <div class="row" style="margin-top:10px;">
@@ -195,7 +160,7 @@
 
             <div style="margin-top:10px;">
               <label for="notesInput">Notes (optional)</label>
-              <textarea id="notesInput" placeholder="Example: solid form, felt stronger, left side tired"></textarea>
+              <textarea id="notesInput" placeholder="Example: strong today, solid form, left side tired"></textarea>
             </div>
 
             <div class="row" style="margin-top:10px;">
@@ -207,32 +172,33 @@
           </div>
         </div>
 
+        <!-- NUTRITION -->
         <div id="tab_nutrition" class="hidden" style="margin-top:12px;">
           <div class="card">
             <strong>Daily Nutrition</strong>
             <div class="small muted" style="margin-top:6px;">
-              Simple daily logging for calories, protein, carbohydrates, fat, water, and consistency habits.
+              Simple daily tracking for calories, protein, carbohydrates, fat, water, and consistency habits.
             </div>
 
             <div class="kpi" style="margin-top:10px;">
               <div class="box">
                 <div class="small muted">Calories</div>
-                <div class="big">Choose target</div>
-                <div class="small muted">Track what she is actually eating first.</div>
+                <div class="big">Track daily</div>
+                <div class="small muted">Start with accuracy before adjusting targets.</div>
               </div>
               <div class="box">
                 <div class="small muted">Protein</div>
-                <div class="big">Daily target</div>
-                <div class="small muted">Keep this consistent.</div>
+                <div class="big">Track daily</div>
+                <div class="small muted">Keep this steady.</div>
               </div>
               <div class="box">
                 <div class="small muted">Carbohydrates</div>
-                <div class="big">Daily target</div>
+                <div class="big">Track daily</div>
                 <div class="small muted">Fuel workouts and recovery.</div>
               </div>
               <div class="box">
                 <div class="small muted">Fat</div>
-                <div class="big">Daily target</div>
+                <div class="big">Track daily</div>
                 <div class="small muted">Balance and satiety.</div>
               </div>
             </div>
@@ -291,7 +257,7 @@
               </div>
               <div style="flex: 1 1 200px;">
                 <label for="weighNote">Note (optional)</label>
-                <input id="weighNote" placeholder="Example: low sleep, cycle week, ate late" />
+                <input id="weighNote" placeholder="Example: slept badly, ate late, cycle week" />
               </div>
               <div style="flex: 1 1 120px;">
                 <label>&nbsp;</label>
@@ -315,6 +281,7 @@
           </div>
         </div>
 
+        <!-- PROGRESS -->
         <div id="tab_progress" class="hidden" style="margin-top:12px;">
           <div class="card">
             <strong>What Progress Should Feel Like</strong>
@@ -323,16 +290,17 @@
             </div>
 
             <div class="hr"></div>
-            <div><strong>Weeks 1–4</strong><div class="small muted">Learn the movements, settle into the plan, and get comfortable pushing with control.</div></div>
+            <div><strong>Weeks 1–4</strong><div class="small muted">Learn the movements, settle into the plan, and get comfortable training with control.</div></div>
             <div class="hr"></div>
             <div><strong>Weeks 5–8</strong><div class="small muted">Repetitions improve, confidence improves, and workouts feel more purposeful.</div></div>
             <div class="hr"></div>
             <div><strong>Weeks 9–12</strong><div class="small muted">Strength and shape changes become easier to notice when food and training are both steady.</div></div>
             <div class="hr"></div>
-            <div><strong>Long-term</strong><div class="small muted">Keep it simple. Progress comes from repeating the basics well, not constantly changing routines.</div></div>
+            <div><strong>Long term</strong><div class="small muted">Keep it simple. Progress comes from repeating the basics well, not from constantly changing routines.</div></div>
           </div>
         </div>
 
+        <!-- SETTINGS -->
         <div class="card hidden" id="settingsPanel" style="margin-top:12px;">
           <div class="row" style="justify-content:space-between;">
             <strong>Settings</strong>
@@ -359,7 +327,7 @@
         </div>
 
         <div class="row" style="margin-top:10px;">
-          <input id="searchInput" placeholder="Search exercise, day, or notes…" style="flex:1 1 auto;" />
+          <input id="searchInput" placeholder="Search exercise, workout, or notes…" style="flex:1 1 auto;" />
           <button id="btnToday">Today</button>
           <button id="btnDeleteLast" class="danger" title="Delete last entry">Delete last</button>
         </div>
@@ -369,7 +337,7 @@
             <thead>
               <tr>
                 <th style="width:110px;">Date</th>
-                <th style="width:60px;">Day</th>
+                <th style="width:70px;">Day</th>
                 <th>Exercise</th>
                 <th style="width:190px;">Result</th>
                 <th>Notes</th>
@@ -386,6 +354,6 @@
     </div>
   </div>
 
-  <script src="app.js?v=JEN-001"></script>
+  <script src="app.js?v=JEN-002"></script>
 </body>
-          </html>
+</html>
