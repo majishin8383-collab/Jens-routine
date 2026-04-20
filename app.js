@@ -33,6 +33,11 @@
     "Plank": { min: 30, max: 60, inc: 0, units: "seconds", metric: "seconds" },
     "Incline Treadmill Walk": { min: 10, max: 20, inc: 0, units: "minutes", metric: "minutes" }
   };
+  const normalizeText = (v) => String(v ?? "").trim().toLowerCase().replace(/\s+/g, " ");
+  const normalizeDay = (v) => String(v ?? "").trim().toUpperCase();
+  const RULES_BY_KEY = Object.fromEntries(
+    Object.entries(RULES).map(([name, rule]) => [normalizeText(name), { ...rule, canonicalName: name }])
+  );
 
   const KEYS = {
     LOG: "JEN_FITNESS_LOG_V3",
@@ -122,15 +127,31 @@
   }
 
   function getLastEntry(day, exercise) {
-    return [...state.log].sort((a, b) => b.ts - a.ts).find((x) => x.day === day && x.exercise === exercise) || null;
+    const dayKey = normalizeDay(day);
+    const exerciseKey = normalizeText(exercise);
+    return [...state.log].sort((a, b) => b.ts - a.ts).find((x) =>
+      normalizeDay(x.day) === dayKey && normalizeText(x.exercise) === exerciseKey
+    ) || null;
   }
 
   function keyForTarget(day, exercise) {
+    return `${normalizeDay(day)}|${normalizeText(exercise)}`;
+  }
+
+  function legacyKeyForTarget(day, exercise) {
     return `${day}|${exercise}`;
   }
 
+  function getTarget(day, exercise) {
+    const normalizedKey = keyForTarget(day, exercise);
+    if (state.targets[normalizedKey]) return state.targets[normalizedKey];
+    const legacyKey = legacyKeyForTarget(day, exercise);
+    if (state.targets[legacyKey]) return state.targets[legacyKey];
+    return null;
+  }
+
   function ruleFor(exercise) {
-    return RULES[exercise] || null;
+    return RULES_BY_KEY[normalizeText(exercise)] || null;
   }
 
   function updateExerciseOptions(day, preferred) {
@@ -186,7 +207,7 @@
   function updateBadges(day, exercise) {
     const rule = ruleFor(exercise);
     const last = getLastEntry(day, exercise);
-    const target = state.targets[keyForTarget(day, exercise)] || null;
+    const target = getTarget(day, exercise);
 
     byId("lastBadge").textContent = `Last: ${formatResult(last)}`;
     if (rule.metric === "reps") {
@@ -203,7 +224,7 @@
 
   function applyAutofill(day, exercise) {
     const last = getLastEntry(day, exercise);
-    const target = state.targets[keyForTarget(day, exercise)] || null;
+    const target = getTarget(day, exercise);
     const rule = ruleFor(exercise);
 
     applyExerciseMode(exercise);
@@ -539,8 +560,9 @@
     });
 
     byId("btnApplySuggested").addEventListener("click", () => {
-      const key = keyForTarget(byId("daySelect").value, byId("exerciseSelect").value);
-      const t = state.targets[key];
+      const day = byId("daySelect").value;
+      const exercise = byId("exerciseSelect").value;
+      const t = getTarget(day, exercise);
       if (!t) {
         toast("No suggested target yet.");
         return;
@@ -616,7 +638,10 @@
 
       const suggestion = suggestionFromEntry(exercise, units, weight, metricValue, clean);
       if (suggestion) {
-        state.targets[keyForTarget(day, exercise)] = suggestion;
+        const normalizedKey = keyForTarget(day, exercise);
+        const legacyKey = legacyKeyForTarget(day, exercise);
+        state.targets[normalizedKey] = suggestion;
+        if (legacyKey !== normalizedKey) delete state.targets[legacyKey];
         save(KEYS.TARGETS, state.targets);
       }
 
